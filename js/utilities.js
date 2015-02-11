@@ -45,18 +45,6 @@ function getRandom(min, max)
 	return Math.random() * (max-min) + min;
 }
 
-// returns a random color of alpha 1.0
-// http://paulirish.com/2009/random-hex-color-code-snippets/
-function getRandomColor(){
-	var red = Math.round(Math.random()*200+55);
-	var green = Math.round(Math.random()*200+55);
-	var blue=Math.round(Math.random()*200+55);
-	var color='rgb('+red+','+green+','+blue+')';
-	// OR	if you want to change alpha
-	// var color='rgba('+red+','+green+','+blue+',0.50)'; // 0.50
-	return color;
-}
-
 function clamp(val, min, max)
 {
 	return Math.max(min, Math.min(max, val));
