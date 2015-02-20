@@ -1,4 +1,4 @@
-app.Circle = {
+var Circle = {
 	function Circle(x, y, xSpeed, ySpeed)
 	{
 		this.x = x;

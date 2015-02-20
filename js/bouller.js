@@ -1,4 +1,4 @@
-app.Circle = {
+var Bouller = {
 	function Circle(x, y, state)
 	{
 		this.x = x;
@@ -9,13 +9,14 @@ app.Circle = {
 		this.color = "#FFF";
 	}
 	
-	var c = Circle.prototype;
+	var b = Bouller.prototype;
 	
-	c.update = function(dt)
+	b.update = function(dt)
 	{
+		
 	}
 	
-	c.draw = function(ctx)
+	b.draw = function(ctx)
 	{
 		ctx.save();
 		ctx.fillStyle = this.color;
