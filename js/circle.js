@@ -1,4 +1,5 @@
-var Circle = {
+		
+var Circle = function() {
 	function Circle(x, y, xSpeed, ySpeed)
 	{
 		this.x = x;
@@ -9,7 +10,7 @@ var Circle = {
 		this.radius = 0;
 		this.drawRadius = 10;
 		this.color = "#FFF";
-	}
+	};
 	
 	var c = Circle.prototype;
 	
@@ -17,7 +18,7 @@ var Circle = {
 	{
 		this.x += this.xSpeed * dt;
 		this.y += this.ySpeed * dt;
-	}
+	};
 	
 	c.draw = function(ctx)
 	{
@@ -27,5 +28,5 @@ var Circle = {
 		ctx.arc(this.x, this.y, this.drawRadius, 0, Math.PI * 2, false);
 		ctx.closePath();
 		ctx.fill()
-	}
+	};
 }();

@@ -13,10 +13,11 @@
 	}
 	</style>
 	<script src="js/utilities.js"></script>
-	<script src="js/bubbles.js"></script>
-	<script src="js/circles.js"></script>
+	<script src="js/bouller.js"></script>
+	<script src="js/circle.js"></script>
 	<script>
 		"use strict";
+		
 		(function(){
 		var canvas, ctx;
 		var CANVAS_WIDTH = 640, CANVAS_HEIGHT = 480;
@@ -26,6 +27,7 @@
 		var GAME_STATE_ROUND_OVER = 2;
 		var GAME_STATE_END = 3;
 		var GAME_STATE_REPEAT_LEVEL = 4;
+		var GAME_STATE_EXPLODING = 5;
 
 		// one new variable
 		
@@ -33,7 +35,6 @@
 		var roundScore;
 		var totalScore = 0;
 
-		var	bubbles = [];
 		var paused = false;
 		var animationID;
 		
@@ -50,6 +51,32 @@
 		
 		var gameSpeed = 1;
 		
+		var level = 1;
+		
+		var circles = [];
+		var	boullers = [];
+		
+		var lvl1 = [[1, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0],];
+		
+		var lvl2 = [[1, 0, 1, 0, 1, 0],
+					[0, 0, 0, 0, 0, 0],
+					[1, 0, 1, 0, 1, 0],
+					[0, 0, 0, 0, 0, 0],
+					[1, 0, 1, 0, 1, 0],
+					[0, 0, 0, 0, 0, 0],];
+		
+		var lvl3 = [[6, 2, 3, 4, 5, 6],
+					[1, 1, 1, 1, 1, 1],
+					[0, 1, 1, 1, 1, 1],
+					[0, 0, 0, 1, 1, 1],
+					[0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1],];
+		
 		window.onload = init;
 	
 		function init(){
@@ -65,27 +92,59 @@
 			
 			effectAudio = document.querySelector('#effectAudio');
 			effectAudio.volume = 0.3;
+
+			canvas.onmousedown = doMouseDown;
 			
-			
+			reset();
 			
 			update();
 		}
 		
 		function reset()
 		{
-		
+			if(level == 1)
+			{
+				boullers = makeLevel(lvl1);
+			}
 		}
 		
 		function update()
 		{
 			animationID = requestAnimationFrame(update);
 			
+			var dt = calculateDeltaTime();
+			
+			for(var i = 0; i < boullers.length; i++)
+			{
+				bouller[i].update(dt);
+			}
+			for(var i = 0; i < circles.length; i++)
+			{
+				circles[i].update(dt);
+			}
+			
+			boullers = boullers.filter(function(b)
+			{
+				return b.active;
+			});
+			circles = circles.filter(function(c)
+			{
+				return c.active;
+			});
+	
 			draw();
 		}
 		
 		function draw()
 		{
-		
+			for(var i = 0; i < boullers.length; i++)
+			{
+				bouller[i].draw();
+			}
+			for(var i = 0; i < circles.length; i++)
+			{
+				ciecles[i].draw();
+			}
 		}
 		
 		function drawText(string, x, y, size, color)
@@ -97,12 +156,21 @@
 		
 		function doMouseDown(e)
 		{
-			
+			var mouse = getMouse(e);
+			for(var i = 0; i < boullers.length; i++)
+			{
+				var b = boullers[i];
+				if(pointInsideCircle(mouse.x, mouse.y, b))
+				{
+					circleClicked(b);
+					break;
+				}
+			}
 		}
 		
-		function bubbleClicked(bubble)
+		function boullerClicked(bouller)
 		{
-
+			b.state -= 1;
 		}
 		
 		function drawPauseScreen()
@@ -116,19 +184,25 @@
 			ctx.restore();
 		}
 		
-		function moveCircles(dt)
+		function makeLevel(matrix)
 		{
-
-		}
-		
-		function checkForCollisions()
-		{
-			
-		}
-		
-		function drawBubbles()
-		{
-
+			var ret = [];
+			for(var i = 0; i < matrix.length; i++)
+			{
+				for (var j = 0; j < matrix[i].length; j++)
+				{
+					if(matrix[i][j] > 0)
+					{
+						var x = 50 + 75 * j;
+						var y = 50 + 75 * i;
+						//debugger;
+						var bouller = new Bouller(x, y, matrix[i][j]);
+						ret.push(bouller);
+					}
+				}
+			}
+			console.log(ret);
+			return ret;
 		}
 		
 		function drawHUD()
