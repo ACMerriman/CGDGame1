@@ -81,5 +81,6 @@ b.explode = function(circles)
 	circles.push(new Circle(this.x, this.y, 			0,  CIRCLE_SPEED));
 	circles.push(new Circle(this.x, this.y, 			0, -CIRCLE_SPEED));
 	console.log("boom");
+	playEffect();
 };
 //}();

@@ -18,7 +18,7 @@
 	<script>
 		"use strict";
 		
-		(function(){
+		//(function(){
 		var canvas, ctx;
 		var CANVAS_WIDTH = 480, CANVAS_HEIGHT = 480;
 		// CONSTANTS
@@ -100,7 +100,7 @@
 			ctx = canvas.getContext("2d");
 			
 			bgAudio = document.querySelector('#bgAudio');
-			bgAudio.volume = 0.25;
+			bgAudio.volume = 0.1;
 			
 			winAudio = document.querySelector('#winAudio');
 			winAudio.volume = 0.25;
@@ -112,11 +112,14 @@
 			
 			reset();
 			
+			bgAudio.play();
+			
 			update();
 		}
 		
 		function reset()
 		{
+			winPlayed = false;
 			if(level == 1)
 			{
 				boullers = makeLevel(lvl1);
@@ -145,6 +148,7 @@
 			else
 			{
 				gameState = GAME_STATE_END;
+				winPlayed = true;
 			}
 		}
 		
@@ -184,6 +188,12 @@
 				{
 					gameState = GAME_STATE_REPEAT_LEVEL;
 				}
+			}
+			
+			if(boullers.length == 0 && !winPlayed)
+			{
+				winAudio.play();
+				winPlayed = true;
 			}
 	
 			draw();
@@ -328,7 +338,7 @@
 				currentEffect += currentDirection;
 			}
 		}
-		}())
+		//}())
 	</script>
 </head>
 <body>
