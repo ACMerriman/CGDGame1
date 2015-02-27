@@ -9,6 +9,7 @@ var Bouller = function(x, y, state) {
 	this.active = true;
 	this.state = state;
 	this.radius = 25;
+	this.drawRadius = 25;
 	this.color = "#FFF";
 }
 	
@@ -56,6 +57,8 @@ b.update = function(dt, circles)
 	{
 		this.color = "#FFF";
 	}
+	//this.drawRadius = 12.5 * (this.state + 1) / (this.state);
+	this.drawRadius = 25 / Math.pow(this.state, 3/8);
 };
 
 b.draw = function(ctx)
@@ -63,7 +66,7 @@ b.draw = function(ctx)
 	ctx.save();
 	ctx.fillStyle = this.color;
 	ctx.beginPath();
-	ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+	ctx.arc(this.x, this.y, this.drawRadius, 0, Math.PI * 2, false);
 	ctx.closePath();
 	ctx.fill()
 };
