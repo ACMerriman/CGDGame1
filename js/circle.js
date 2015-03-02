@@ -34,4 +34,8 @@ c.draw = function(ctx)
 	ctx.arc(this.x, this.y, this.drawRadius, 0, Math.PI * 2, false);
 	ctx.closePath();
 	ctx.fill()
+	
+	ctx.lineWidth = 4;
+	ctx.strokeStyle = "black";
+	ctx.stroke();
 };

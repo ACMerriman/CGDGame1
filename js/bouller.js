@@ -69,6 +69,10 @@ b.draw = function(ctx)
 	ctx.arc(this.x, this.y, this.drawRadius, 0, Math.PI * 2, false);
 	ctx.closePath();
 	ctx.fill()
+	
+	ctx.lineWidth = 5;
+	ctx.strokeStyle = "black";
+	ctx.stroke();
 };
 
 b.collidesWithCircle = function(circle)

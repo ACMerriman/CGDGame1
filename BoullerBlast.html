@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Template</title>
+	<title>Bouller Blast</title>
 	<style type="text/css">
 	canvas{
 		border:1px solid gray;
@@ -56,6 +56,8 @@
 		
 		var circles = [];
 		var	boullers = [];
+		
+		var highScore = 0;
 		
 		var lvl1 = [[0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0],
@@ -127,6 +129,8 @@
 			reset();
 			
 			bgAudio.play();
+			
+			localStorage.setItem('score', JSON.stringify(highScore));
 			
 			update();
 		}
@@ -223,7 +227,8 @@
 		
 		function draw()
 		{
-			ctx.fillStyle = "black";
+			//changed background to grey
+			ctx.fillStyle = "#5E5E5E";
 			ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 			
 			drawHUD();
@@ -248,9 +253,11 @@
 			}
 			else if(gameState == GAME_STATE_ROUND_OVER)
 			{
-				drawText("Congratulations!", CANVAS_WIDTH/2, CANVAS_HEIGHT/2 - 50, 32, "red", "center");
+				drawText("Congratulations!", CANVAS_WIDTH/2, CANVAS_HEIGHT/2 - 50, 32, "#ff0000", "center");
 				drawText("You Beat Level " + level, CANVAS_WIDTH/2, CANVAS_HEIGHT/2 - 20, 24, "white", "center");
+				drawText("Current Score: " + highScore, CANVAS_WIDTH/2, CANVAS_HEIGHT/2 - 210, 24, "white", "center");
 				drawText("Click To Go To Level " + (level + 1), CANVAS_WIDTH/2, CANVAS_HEIGHT/2 + 30, 24, "white", "center");
+				
 			}
 		}
 		
@@ -300,7 +307,9 @@
 			if(numclicks > 0)
 			{
 				bouller.state -= 1;
-				numclicks -= 1;	
+				numclicks -= 1;
+				highScore += ((numclicks + 1) * 10);
+				console.log(highScore);
 			}
 		}
 		
